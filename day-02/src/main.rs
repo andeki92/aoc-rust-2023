@@ -46,20 +46,20 @@ fn part_one(file_path: &str) -> u32 {
         .split("\n")
         .map(|line| parse_game(line))
         .filter(|game| {
-            !game.rounds.iter().any(|round| {
-                round.iter().any(|cube| match cube {
+            game.rounds.iter().all(|round| {
+                round.iter().all(|cube| match cube {
                     Cube {
                         count,
                         color: Color::Red,
-                    } => count > &RED_THRESHOLD,
+                    } => count < &RED_THRESHOLD,
                     Cube {
                         count,
                         color: Color::Green,
-                    } => count > &GREEN_THRESHOLD,
+                    } => count < &GREEN_THRESHOLD,
                     Cube {
                         count,
                         color: Color::Blue,
-                    } => count > &BLUE_THRESHOLD,
+                    } => count < &BLUE_THRESHOLD,
                 })
             })
         })
