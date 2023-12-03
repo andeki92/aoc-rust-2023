@@ -30,13 +30,13 @@ fn main() {
     assert_eq!(part_one_example, 8);
 
     let part_one_solution = part_one("data/input.txt");
-    println!("Day 1 - Part 1 solution is '{part_one_solution:?}'");
+    println!("Day 2 - Part 1 solution is '{part_one_solution:?}'");
 
     let part_two_example = part_two("data/example.txt");
     assert_eq!(part_two_example, 2286);
 
     let part_two_solution = part_two("data/input.txt");
-    println!("Day 1 - Part 2 solution is '{part_two_solution:?}'");
+    println!("Day 2 - Part 2 solution is '{part_two_solution:?}'");
 }
 
 fn part_one(file_path: &str) -> u32 {
