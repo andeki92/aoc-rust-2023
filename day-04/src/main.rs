@@ -1,4 +1,6 @@
-use std::{collections::HashMap, fs};
+use std::collections::HashMap;
+
+use utils::read;
 
 fn main() {
     let part_one_example = part_one("data/example.txt");
@@ -14,11 +16,9 @@ fn main() {
     println!("Day 4 - Part 2 solution is '{part_two_solution:?}'");
 }
 
-fn part_one(file_path: &str) -> u32 {
-    fs::read_to_string(file_path)
-        .expect("Failed to read file")
-        .trim_end()
-        .split("\n")
+fn part_one(file_name: &str) -> u32 {
+    read(file_name)
+        .iter()
         .map(|line| parse_cards(line))
         .filter_map(|matches| {
             if matches > 0 {
@@ -30,13 +30,11 @@ fn part_one(file_path: &str) -> u32 {
         .sum::<u32>()
 }
 
-fn part_two(file_path: &str) -> u32 {
+fn part_two(file_name: &str) -> u32 {
     let mut card_count = HashMap::new();
 
-    fs::read_to_string(file_path)
-        .expect("Failed to read file")
-        .trim_end()
-        .split("\n")
+    read(file_name)
+        .iter()
         .map(|line| parse_cards(line))
         .enumerate()
         .fold(0, |acc, (idx, matches)| {

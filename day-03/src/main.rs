@@ -1,7 +1,8 @@
-use std::{fs, vec};
+use std::vec;
 
 use itertools::Itertools;
 use regex::Regex;
+use utils::read;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 struct Point(i32, i32);
@@ -32,9 +33,8 @@ fn main() {
     println!("Day 3 - Part 2 solution is '{part_two_solution:?}'");
 }
 
-fn part_one(file_path: &str) -> u32 {
-    let file_content = fs::read_to_string(file_path).expect("Failed to read file");
-    let lines = file_content.trim_end().split("\n").collect();
+fn part_one(file_name: &str) -> u32 {
+    let lines = read(file_name);
     let (symbols, parts) = parse_schematic(lines);
     let symbol_points: Vec<Point> = symbols.iter().map(|s| s.idx).collect();
 
@@ -53,9 +53,8 @@ fn part_one(file_path: &str) -> u32 {
         .sum::<u32>()
 }
 
-fn part_two(file_path: &str) -> u32 {
-    let file_content = fs::read_to_string(file_path).expect("Failed to read file");
-    let lines = file_content.trim_end().split("\n").collect();
+fn part_two(file_name: &str) -> u32 {
+    let lines = read(file_name);
     let (symbols, parts) = parse_schematic(lines);
 
     symbols
@@ -78,7 +77,7 @@ fn part_two(file_path: &str) -> u32 {
         .sum()
 }
 
-fn parse_schematic(lines: Vec<&str>) -> (Vec<Symbol>, Vec<Part>) {
+fn parse_schematic(lines: Vec<String>) -> (Vec<Symbol>, Vec<Part>) {
     let number_matcher = Regex::new(r"\d+").unwrap();
 
     let mut parts: Vec<Part> = vec![];

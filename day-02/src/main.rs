@@ -1,6 +1,6 @@
-use std::{fs, u32};
-
 use regex::Regex;
+use std::u32;
+use utils::read;
 
 #[derive(Debug)]
 enum Color {
@@ -39,11 +39,9 @@ fn main() {
     println!("Day 2 - Part 2 solution is '{part_two_solution:?}'");
 }
 
-fn part_one(file_path: &str) -> u32 {
-    fs::read_to_string(file_path)
-        .expect("Failed to read file")
-        .trim_end()
-        .split("\n")
+fn part_one(file_name: &str) -> u32 {
+    read(file_name)
+        .iter()
         .map(|line| parse_game(line))
         .filter(|game| {
             game.rounds.iter().all(|round| {
@@ -67,11 +65,9 @@ fn part_one(file_path: &str) -> u32 {
         .sum()
 }
 
-fn part_two(file_path: &str) -> u32 {
-    fs::read_to_string(file_path)
-        .expect("Failed to read file")
-        .trim_end()
-        .split("\n")
+fn part_two(file_name: &str) -> u32 {
+    read(file_name)
+        .iter()
         .map(|line| parse_game(line))
         .map(|game| {
             let mut min_red: u32 = 0;

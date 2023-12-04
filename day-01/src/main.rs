@@ -1,4 +1,4 @@
-use std::fs;
+use utils::read;
 
 fn main() {
     let part_one_example = part_one("data/example.txt");
@@ -14,11 +14,9 @@ fn main() {
     println!("Day 1 - Part 2 solution is '{part_two_solution:?}'");
 }
 
-fn part_one(file_path: &str) -> u32 {
-    fs::read_to_string(file_path)
-        .expect("Failed to read file")
-        .trim_end()
-        .split("\n")
+fn part_one(file_name: &str) -> u32 {
+    read(file_name)
+        .iter()
         .map(|line| {
             line.chars()
                 .filter_map(|c| c.to_digit(10))
@@ -35,11 +33,9 @@ fn part_one(file_path: &str) -> u32 {
         .sum::<u32>()
 }
 
-fn part_two(file_path: &str) -> u32 {
-    fs::read_to_string(file_path)
-        .expect("Failed to read file")
-        .trim_end()
-        .split("\n")
+fn part_two(file_name: &str) -> u32 {
+    read(file_name)
+        .iter()
         .map(|line| {
             line.to_string()
                 .replace("zero", "zero0zero")
