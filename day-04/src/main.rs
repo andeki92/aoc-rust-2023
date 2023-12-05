@@ -3,14 +3,8 @@ use std::collections::HashMap;
 use utils::read;
 
 fn main() {
-    let part_one_example = part_one("data/example.txt");
-    assert_eq!(part_one_example, 13);
-
     let part_one_solution = part_one("data/input.txt");
     println!("Day 4 - Part 1 solution is '{part_one_solution:?}'");
-
-    let part_two_example = part_two("data/example.txt");
-    assert_eq!(part_two_example, 30);
 
     let part_two_solution = part_two("data/input.txt");
     println!("Day 4 - Part 2 solution is '{part_two_solution:?}'");
@@ -70,4 +64,19 @@ fn parse_nums(line: &str) -> Vec<u32> {
     line.split_whitespace()
         .map(|n| n.parse::<u32>().unwrap())
         .collect()
+}
+
+#[cfg(test)]
+mod test {
+    use crate::{part_one, part_two};
+
+    #[test]
+    fn part_one_test() {
+        assert_eq!(13, part_one("data/example.txt"))
+    }
+
+    #[test]
+    fn part_two_test() {
+        assert_eq!(30, part_two("data/example.txt"))
+    }
 }

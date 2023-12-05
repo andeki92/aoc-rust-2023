@@ -29,11 +29,11 @@ for cargo_dir in $(find "$ROOT" -name Cargo.toml | xargs -n1 -I {} dirname {} | 
 
     if [ -f "src/main.rs" ]; then
         echo "=============== ${project} ==============="
+        RUST_BACKTRACE=0 $CARGO_BIN test --quiet
         RUST_BACKTRACE=0 $CARGO_BIN run --quiet
         echo ""
         RUST_BACKTRACE=0 $CARGO_BIN build --release >/dev/null
         hyperfine -N ./target/release/$(basename $cargo_dir) 2>/dev/null
-        echo ""
     fi
 
     popd >/dev/null

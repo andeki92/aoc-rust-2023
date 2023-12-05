@@ -1,14 +1,8 @@
 use utils::read;
 
 fn main() {
-    let part_one_example = part_one("data/example.txt");
-    assert_eq!(part_one_example, 142);
-
     let part_one_solution = part_one("data/input.txt");
     println!("Day 1 - Part 1 solution is '{part_one_solution:?}'");
-
-    let part_two_example = part_two("data/example_2.txt");
-    assert_eq!(part_two_example, 281);
 
     let part_two_solution = part_two("data/input.txt");
     println!("Day 1 - Part 2 solution is '{part_two_solution:?}'");
@@ -54,4 +48,19 @@ fn part_two(file_name: &str) -> u32 {
         })
         .map(|vec| 10 * vec.first().unwrap() + vec.last().unwrap())
         .sum::<u32>()
+}
+
+#[cfg(test)]
+mod test {
+    use crate::{part_one, part_two};
+
+    #[test]
+    fn part_one_test() {
+        assert_eq!(142, part_one("data/example.txt"))
+    }
+
+    #[test]
+    fn part_two_test() {
+        assert_eq!(281, part_two("data/example_2.txt"))
+    }
 }
