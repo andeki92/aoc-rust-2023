@@ -15,6 +15,17 @@ pub fn read(file_name: &str) -> Vec<String> {
         .collect()
 }
 
+pub fn read_string(file_name: &str) -> String {
+    let mut f = File::open(file_name).expect(&format!("file not found: {}", file_name));
+
+    let mut contents = String::new();
+
+    f.read_to_string(&mut contents)
+        .expect(&format!("cannot read file {}", file_name));
+
+    contents.to_string()
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
