@@ -23,7 +23,7 @@ fi
 # toplevel git repo
 ROOT=$(git rev-parse --show-toplevel)
 
-for cargo_dir in $(find "$ROOT" -name Cargo.toml | xargs -n1 -I {} dirname {} | sort -t/); do
+for cargo_dir in $(find "$ROOT" -name Cargo.toml -not -path "*/template/*" | xargs -n1 -I {} dirname {} | sort -t/); do
     project=$(basename $cargo_dir | sed 's/-/ /g' | awk '{ print toupper(substr($0, 1, 1)) substr($0, 2) }')
     pushd "$cargo_dir" >/dev/null
 
