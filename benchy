@@ -32,7 +32,7 @@ for cargo_dir in $(find "$ROOT" -name Cargo.toml -not -path "*/template/*" | xar
         RUST_BACKTRACE=0 $CARGO_BIN test --quiet
         RUST_BACKTRACE=0 $CARGO_BIN run --quiet
         echo ""
-        RUST_BACKTRACE=0 $CARGO_BIN build --release >/dev/null
+        RUST_BACKTRACE=0 $CARGO_BIN build --release >/dev/null 2>&1
         hyperfine -N ./target/release/$(basename $cargo_dir) 2>/dev/null
     fi
 
