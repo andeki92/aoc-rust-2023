@@ -24,7 +24,7 @@ fn part_one(file_name: &str) -> u32 {
     find_output_node(&map, "AAA")
 }
 
-fn part_two(file_name: &str) -> u64 {
+fn part_two(file_name: &str) -> usize {
     let input = read_string(file_name);
     let map = parse_nodes(input);
 
@@ -36,12 +36,12 @@ fn part_two(file_name: &str) -> u64 {
 
     let node_distances = starting_nodes
         .iter()
-        .map(|&node| find_output_node(&map, node) as u64)
+        .map(|&node| find_output_node(&map, node) as usize)
         .collect::<Vec<_>>();
 
     node_distances
         .iter()
-        .fold(1 as u64, |acc, &distance| lcm(acc, distance))
+        .fold(1, |acc, &distance| lcm(acc, distance))
 }
 
 fn find_output_node(map: &Map, start_node: &str) -> u32 {
