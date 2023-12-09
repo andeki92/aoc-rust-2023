@@ -14,7 +14,7 @@ fn part_one(file_name: &str) -> i32 {
     input
         .iter()
         .map(|line| parse_history(line))
-        .map(|seq| predict_next_value(seq))
+        .map(|seq| predict_value(seq))
         .sum()
 }
 
@@ -24,62 +24,28 @@ fn part_two(file_name: &str) -> i32 {
     input
         .iter()
         .map(|line| parse_history(line))
-        .map(|seq| predict_previous_value(seq))
+        .map(|seq| seq.iter().copied().rev().collect::<Vec<_>>())
+        .map(|rev_seq| predict_value(rev_seq))
         .sum()
 }
 
-fn predict_next_value(sequence: Vec<i32>) -> i32 {
-    let mut history: Vec<Vec<i32>> = vec![sequence];
-    let mut current_sequence = 0;
+fn predict_value(sequence: Vec<i32>) -> i32 {
+    let mut current_sequence = sequence;
+    let mut last_values: Vec<i32> = vec![];
 
-    loop {
-        // if the last element is all zeroes we can start extrapolating
-        if history.last().unwrap().iter().all(|&e| e == 0) {
-            (0..history.len() - 1).rev().for_each(|idx| {
-                let last = *history[idx].last().unwrap();
-                let previous = *history[idx + 1].last().unwrap_or_else(|| &0);
-                history[idx].push(last + previous);
-            });
-            break;
-        }
+    while current_sequence.iter().any(|&e| e != 0) {
+        last_values.push(*current_sequence.last().unwrap());
 
-        let next_sequence = history[current_sequence]
+        let next_sequence = current_sequence
             .windows(2)
             .map(|win| win[1] - win[0])
             .collect::<Vec<_>>();
-        history.push(next_sequence);
 
-        current_sequence += 1
+        current_sequence = next_sequence
     }
 
-    *history.first().unwrap().last().unwrap()
-}
-
-fn predict_previous_value(sequence: Vec<i32>) -> i32 {
-    let mut history: Vec<Vec<i32>> = vec![sequence];
-    let mut current_sequence = 0;
-
-    loop {
-        // if the last element is all zeroes we can start extrapolating
-        if history.last().unwrap().iter().all(|&e| e == 0) {
-            (0..history.len() - 1).rev().for_each(|idx| {
-                let first = *history[idx].first().unwrap();
-                let previous = *history[idx + 1].first().unwrap_or_else(|| &0);
-                history[idx].insert(0, first - previous);
-            });
-            break;
-        }
-
-        let next_sequence = history[current_sequence]
-            .windows(2)
-            .map(|win| win[1] - win[0])
-            .collect::<Vec<_>>();
-        history.push(next_sequence);
-
-        current_sequence += 1
-    }
-
-    *history.first().unwrap().first().unwrap()
+    // starting at 0 we can fold the reversed list back up to get our prediction
+    last_values.iter().rev().fold(0, |acc, e| acc + e)
 }
 
 fn parse_history(input: &str) -> Vec<i32> {
@@ -96,11 +62,13 @@ mod test {
 
     #[test]
     fn part_one_test() {
-        assert_eq!(114, part_one("data/example.txt"))
+        assert_eq!(114, part_one("data/example.txt"));
+        assert_eq!(1696140818, part_one("data/input.txt"));
     }
 
     #[test]
     fn part_two_test() {
-        assert_eq!(2, part_two("data/example.txt"))
+        assert_eq!(2, part_two("data/example.txt"));
+        assert_eq!(1152, part_two("data/input.txt"));
     }
 }
