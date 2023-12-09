@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use utils::read;
+use utils::string::read;
 
 fn main() {
     let part_one_solution = part_one("data/input.txt");

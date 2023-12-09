@@ -1,4 +1,4 @@
-use utils::read_string;
+use utils::string::read_string;
 
 fn main() {
     let part_one_solution = part_one("data/input.txt");

@@ -2,7 +2,7 @@ use std::vec;
 
 use itertools::Itertools;
 use regex::Regex;
-use utils::read;
+use utils::string::read;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 struct Point(i32, i32);

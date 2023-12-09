@@ -1,6 +1,6 @@
 use std::{cmp::Ordering, collections::HashMap};
 
-use utils::read;
+use utils::string::read;
 
 #[derive(Debug, PartialEq, Eq)]
 struct Cards {

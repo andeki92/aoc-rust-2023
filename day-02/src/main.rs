@@ -1,6 +1,6 @@
 use regex::Regex;
 use std::u32;
-use utils::read;
+use utils::string::read;
 
 #[derive(Debug)]
 enum Color {
