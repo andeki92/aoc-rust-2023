@@ -10,10 +10,12 @@ fn main() {
 
 fn part_one(file_name: &str) -> u32 {
     let input = read(file_name);
+    todo!()
 }
 
 fn part_two(file_name: &str) -> u32 {
     let input = read_string(file_name);
+    todo!()
 }
 
 #[cfg(test)]
