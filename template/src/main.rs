@@ -1,5 +1,7 @@
 use utils::string::{read, read_string};
 
+type SolutionType = u32;
+
 fn main() {
     let part_one_solution = part_one("data/input.txt");
     println!("Day {{.day}} - Part 1 solution is '{part_one_solution:?}'");
@@ -8,12 +10,12 @@ fn main() {
     println!("Day {{.day}} - Part 2 solution is '{part_two_solution:?}'");
 }
 
-fn part_one(file_name: &str) -> u32 {
+fn part_one(file_name: &str) -> SolutionType {
     let input = read(file_name);
     todo!()
 }
 
-fn part_two(file_name: &str) -> u32 {
+fn part_two(file_name: &str) -> SolutionType {
     let input = read_string(file_name);
     todo!()
 }
