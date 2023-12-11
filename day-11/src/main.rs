@@ -30,7 +30,7 @@ fn find_inter_galactic_distances(
     col_expansion: Vec<usize>,
     multiplier: usize,
 ) -> usize {
-    let galaxy_indices = universe.find_all_coords('#');
+    let galaxy_indices = universe.find_all('#');
     let galaxy_permutations = galaxy_indices.unique_permutations();
 
     // since we can only move in cardinal directions the manhattan distance is easy to calculate
