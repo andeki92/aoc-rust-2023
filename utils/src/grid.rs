@@ -43,7 +43,7 @@ impl<T: Copy + PartialEq> Grid<T> {
     /**
      * Mutate the grid by adding a row of element T at the given index
      */
-    pub fn into_row(&mut self, row_idx: usize, element: T) {
+    pub fn insert_row(&mut self, row_idx: usize, element: T) {
         (0..self.width).for_each(|offset| self.data.insert(row_idx * self.width + offset, element));
         self.height += 1;
     }
@@ -51,7 +51,7 @@ impl<T: Copy + PartialEq> Grid<T> {
     /**
      * Mutate the grid by adding a column of element T at the given index
      */
-    pub fn into_col(&mut self, col_idx: usize, element: T) {
+    pub fn insert_col(&mut self, col_idx: usize, element: T) {
         (0..self.height).for_each(|offset| {
             self.data
                 .insert(col_idx + (self.width * offset) + offset, element)
