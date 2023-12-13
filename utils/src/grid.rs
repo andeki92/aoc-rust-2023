@@ -1,3 +1,5 @@
+use std::fmt::Debug;
+
 #[derive(Debug, Clone)]
 pub struct Grid<T> {
     pub width: usize,
@@ -23,8 +25,14 @@ impl Grid<char> {
     }
 }
 
-impl<T: Copy + PartialEq> Grid<T> {
+impl<T: Copy + PartialEq + Debug> Grid<T> {
     pub fn row(&self, row_idx: usize) -> Vec<&T> {
+        if row_idx >= self.height {
+            panic!(
+                "Attempted to get row with index {} while grid height is {} (indidices are 0-indexed)",
+                row_idx, self.width
+            );
+        }
         self.data
             .iter()
             .skip(row_idx * self.width)
@@ -33,6 +41,13 @@ impl<T: Copy + PartialEq> Grid<T> {
     }
 
     pub fn col(&self, col_idx: usize) -> Vec<&T> {
+        if col_idx >= self.width {
+            panic!(
+                "Attempted to get column with index {} while grid width is {} (indidices are 0-indexed)",
+                col_idx, self.width
+            );
+        }
+
         self.data
             .iter()
             .skip(col_idx)
