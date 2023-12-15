@@ -84,7 +84,4 @@ mod test {
     fn calculate_hash_test() {
         assert_eq!(52, hash_string(r"HASH"));
     }
-
-    #[test]
-    fn linked_hashmap_test() {}
 }
