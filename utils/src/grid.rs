@@ -1,10 +1,20 @@
 use std::fmt::Debug;
 
-#[derive(Debug, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Hash)]
 pub struct Grid<T> {
     pub width: usize,
     pub height: usize,
     pub data: Vec<T>,
+}
+
+fn transpose<T>(v: Vec<Vec<T>>) -> Vec<Vec<T>>
+where
+    T: Clone + Debug,
+{
+    assert!(!v.is_empty());
+    (0..v[0].len())
+        .map(|i| v.iter().map(|inner| inner[i].clone()).collect::<Vec<T>>())
+        .collect()
 }
 
 impl Grid<char> {
@@ -23,21 +33,36 @@ impl Grid<char> {
             data: flat,
         }
     }
+
+    pub fn from_rows(rows: Vec<Vec<char>>) -> Self {
+        let width = rows.len();
+        let height = rows[0].len();
+
+        Grid {
+            width,
+            height,
+            data: rows.iter().flatten().map(|&c| c).collect::<Vec<_>>(),
+        }
+    }
+
+    pub fn from_cols(columns: Vec<Vec<char>>) -> Self {
+        Grid::from_rows(transpose(columns))
+    }
 }
 
 impl<T: Copy + PartialEq + Debug> Grid<T> {
-    pub fn row(&self, row_idx: usize) -> Vec<&T> {
+    pub fn row(&self, row_idx: usize) -> Option<Vec<&T>> {
         if row_idx >= self.height {
-            panic!(
-                "Attempted to get row with index {} while grid height is {} (indidices are 0-indexed)",
-                row_idx, self.width
-            );
+            None
+        } else {
+            Some(
+                self.data
+                    .iter()
+                    .skip(row_idx * self.width)
+                    .take(self.width)
+                    .collect::<Vec<_>>(),
+            )
         }
-        self.data
-            .iter()
-            .skip(row_idx * self.width)
-            .take(self.width)
-            .collect::<Vec<_>>()
     }
 
     pub fn col(&self, col_idx: usize) -> Vec<&T> {
@@ -52,6 +77,19 @@ impl<T: Copy + PartialEq + Debug> Grid<T> {
             .iter()
             .skip(col_idx)
             .step_by(self.width)
+            .collect::<Vec<_>>()
+    }
+
+    pub fn columns(&self) -> Vec<Vec<&T>> {
+        (0..self.width)
+            .map(|index| self.col(index))
+            .collect::<Vec<_>>()
+    }
+
+    pub fn rows(&self) -> Vec<Vec<&T>> {
+        self.data
+            .chunks(self.width)
+            .map(|chunk| chunk.iter().collect::<Vec<_>>())
             .collect::<Vec<_>>()
     }
 

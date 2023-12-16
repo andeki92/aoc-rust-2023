@@ -2,10 +2,81 @@ use std::ops::{Add, Sub};
 
 pub const ORIGIN: Point = Point::new(0, 0);
 
-#[derive(Copy, Clone, Debug, Eq, PartialEq)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Point {
     pub x: i64,
     pub y: i64,
+}
+
+#[derive(Debug, PartialEq, Eq, Clone, Copy, Hash)]
+pub enum Direction {
+    UP,
+    DOWN,
+    LEFT,
+    RIGHT,
+}
+pub trait Directional {
+    fn up(self) -> (Self, Direction)
+    where
+        Self: Sized;
+
+    fn down(self) -> (Self, Direction)
+    where
+        Self: Sized;
+
+    fn left(self) -> (Self, Direction)
+    where
+        Self: Sized;
+
+    fn right(self) -> (Self, Direction)
+    where
+        Self: Sized;
+
+    fn follow(self, direction: &Direction) -> (Self, Direction)
+    where
+        Self: Sized;
+}
+
+impl Directional for Point {
+    fn up(self) -> (Self, Direction)
+    where
+        Self: Sized,
+    {
+        (self + Point::new(0, -1), Direction::UP)
+    }
+
+    fn down(self) -> (Self, Direction)
+    where
+        Self: Sized,
+    {
+        (self + Point::new(0, 1), Direction::DOWN)
+    }
+
+    fn left(self) -> (Self, Direction)
+    where
+        Self: Sized,
+    {
+        (self + Point::new(-1, 0), Direction::LEFT)
+    }
+
+    fn right(self) -> (Self, Direction)
+    where
+        Self: Sized,
+    {
+        (self + Point::new(1, 0), Direction::RIGHT)
+    }
+
+    fn follow(self, direction: &Direction) -> (Self, Direction)
+    where
+        Self: Sized,
+    {
+        match direction {
+            Direction::UP => self.up(),
+            Direction::DOWN => self.down(),
+            Direction::LEFT => self.left(),
+            Direction::RIGHT => self.right(),
+        }
+    }
 }
 
 impl Point {
